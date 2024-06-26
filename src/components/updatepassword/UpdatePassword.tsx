@@ -98,7 +98,7 @@ const UpdatePassword = () => {
               endAdornment: (
                 <InputAdornment position="start">
                   <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                    {!showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               ),

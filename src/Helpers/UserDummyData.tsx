@@ -13,9 +13,9 @@ export const UserData = [
         endDate: '2024-06-29T22:04:00',
       },
       {
-        model: 'Dpk12',
-        location: 'Lahore',
-        color: 'Black',
+        model: 'DHk',
+        location: 'Sahiwal',
+        color: 'Red',
         startDate: '2024-06-24T06:59:42',
         endDate: '2024-06-26T07:36:15',
       },

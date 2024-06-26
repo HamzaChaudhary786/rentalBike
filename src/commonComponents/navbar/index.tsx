@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="flex justify-around items-center">
         <div>Heloo Hamza</div>
         <div>
-          {type === 'manager' ? (
+          {type === 'user' ? (
             <button className="mr-3 py-3 px-3 bg-[blue]">My Reservation</button>
           ) : (
             <Link href="/users">

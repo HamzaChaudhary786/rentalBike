@@ -53,7 +53,11 @@ const Users = () => {
 
     e.preventDefault();
 
-    const filteredData = userData.filter((data: any) => {
+    if (name === '' || email === '' || types === '') {
+      setUserData(UserData)
+    }
+
+    const filteredData = UserData.filter((data: any) => {
 
 
       const matchName = name ? data.name.toLowerCase().includes(name.toLowerCase()) : true;
@@ -78,7 +82,7 @@ const Users = () => {
     console.log("view data is ", viewData)
 
     if (viewData.length > 0) {
-      setSingleUserData(viewData) 
+      setSingleUserData(viewData)
     }
 
 

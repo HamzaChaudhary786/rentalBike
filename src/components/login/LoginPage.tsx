@@ -7,6 +7,7 @@ import { FormValues } from '../../interfaces';
 import { useEnhancedDispatch } from '../../Helpers/reduxHooks';
 import * as Actions from '../../store/actions';
 import { useRouter } from 'next/navigation';
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../../constants';
 
 const LoginPage = () => {
   const dispatch = useEnhancedDispatch();
@@ -19,8 +20,16 @@ const LoginPage = () => {
 
   const LoginValidation = () => {
     const errors: Partial<FormValues> = {};
-    if (!email) errors.email = 'Email is required';
-    if (!password) errors.password = 'Password is required';
+    if (!email) {
+      errors.email = 'Email is required';
+    } else if (!EMAIL_REGEX.test(email)) {
+      errors.email = 'Invalid email format';
+    }
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (!PASSWORD_REGEX.test(password)) {
+      errors.password = 'Invalid password format';
+    }
     return errors;
   };
 

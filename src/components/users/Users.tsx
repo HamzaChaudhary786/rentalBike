@@ -137,7 +137,7 @@ const Users = () => {
                 <TextField
                   type="text"
                   id="Model"
-                  label="Model"
+                  label="Type"
                   value={types}
                   onChange={(e) => setTypes(e.target.value)}
                   variant="outlined"

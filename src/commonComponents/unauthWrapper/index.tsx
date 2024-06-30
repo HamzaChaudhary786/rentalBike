@@ -6,18 +6,51 @@ import * as Actions from '../../store/actions';
 import Navbar from '../navbar';
 import LoginPage from '../../components/login';
 import { useRouter } from 'next/navigation';
+import * as ReducerActions from '../../store/reducers/';
 
 const UnauthWrapper: React.FC<{ children: React.ReactNode }> = (props) => {
   const dispatch = useEnhancedDispatch();
   const router = useRouter();
-  const [IsLoading, setIsLoading] = useState(true);
 
   const isAuth = useEnhancedSelector((state) => state.user.isAuth);
+  const userRole = "manager"
+  const [IsLoading, setIsLoading] = useState(!isAuth);
+
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('@access-token');
+    const refreshToken = localStorage.getItem('@refresh-token');
+
+    if (accessToken && refreshToken) {
+      // Dispatch the tokens to the store
+      dispatch(
+        ReducerActions.setTokens({
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        }),
+      );
+      if (isAuth) {
+        router.push('/reservation');
+      } else {
+        router.push('/');
+      }
+
+      getuserData();
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, router]);
+
+
 
   useEffect(() => {
     if (!IsLoading) {
-      if (isAuth) {
-        router.push('/links');
+      if (isAuth && userRole) {
+        if (userRole === "manager") {
+          router.push('/manager');
+        } else {
+          router.push('/reservation');
+        }
       }
     }
   }, [IsLoading]);

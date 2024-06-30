@@ -22,11 +22,11 @@ export interface Bike {
   type?: string;
 }
 export interface FormValues {
-  email?: null | string;
+  email?: string;
   password?: string;
   rePassword?: string;
   error?: string;
-  name?: string;
+  userName?: string;
   otpCode?: string;
 }
 

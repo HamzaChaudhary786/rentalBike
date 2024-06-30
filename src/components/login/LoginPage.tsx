@@ -2,7 +2,7 @@
 
 import { Button, CircularProgress, TextField } from '@mui/material';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormValues } from '../../interfaces';
 import { useEnhancedDispatch } from '../../Helpers/reduxHooks';
 import * as Actions from '../../store/actions';
@@ -18,19 +18,38 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const LoginValidation = () => {
-    const errors: Partial<FormValues> = {};
+  const validateEmail = (email: string) => {
     if (!email) {
-      errors.email = 'Email is required';
+      return 'Email is required';
     } else if (!EMAIL_REGEX.test(email)) {
-      errors.email = 'Invalid email format';
+      return 'Invalid email format';
     }
+    return '';
+  };
+
+  const validatePassword = (password: string) => {
     if (!password) {
-      errors.password = 'Password is required';
+      return 'Password is required';
     } else if (!PASSWORD_REGEX.test(password)) {
-      errors.password = 'Invalid password format';
+      return 'Invalid password format';
     }
-    return errors;
+    return '';
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      email: validateEmail(e.target.value),
+    }));
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      password: validatePassword(e.target.value),
+    }));
   };
 
   const handleLoginForm = async (e: React.FormEvent) => {
@@ -38,9 +57,14 @@ const LoginPage = () => {
 
     setIsLoading(true);
 
-    const validateError = LoginValidation();
-    if (Object.keys(validateError).length > 0) {
-      setErrors(validateError);
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
+
+    if (emailError || passwordError) {
+      setErrors({
+        email: emailError,
+        password: passwordError,
+      });
       setIsLoading(false);
     } else {
       try {
@@ -58,58 +82,57 @@ const LoginPage = () => {
       }
     }
   };
+
   return (
-    <>
-      <div className="h-screen w-[100%] grid justify-items-center items-center bg-DARK_BACKGROUND_COLOR_MAIN">
-        <form
-          onSubmit={handleLoginForm}
-          className="grid gap-y-4 h-fit w-fi justify-items-start border border-WARNING_COLOR  p-8 bg-[#FFFF]  text-[#000]"
-          style={{ border: '2px solid white' }}
-        >
-          <h1 className="text-2xl font-bold ">Login Form</h1>
-          <TextField
-            name="email"
-            style={{ width: '100%', margin: '5px' }}
-            type="text"
-            label="Email"
-            variant="outlined"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            error={!!errors.email}
-            helperText={errors.email}
-          />
+    <div className="h-screen w-[100%] grid justify-items-center items-center bg-DARK_BACKGROUND_COLOR_MAIN">
+      <form
+        onSubmit={handleLoginForm}
+        className="grid gap-y-4 h-fit w-fi justify-items-start border border-WARNING_COLOR  p-8 bg-[#FFFF]  text-[#000]"
+        style={{ border: '2px solid white' }}
+      >
+        <h1 className="text-2xl font-bold ">Login Form</h1>
+        <TextField
+          name="email"
+          style={{ width: '100%', margin: '5px' }}
+          type="text"
+          label="Email"
+          variant="outlined"
+          value={email}
+          onChange={handleEmailChange}
+          error={!!errors.email}
+          helperText={errors.email}
+        />
 
-          <TextField
-            name="password"
-            style={{ width: '100%', margin: '5px' }}
-            type="password"
-            label="Password"
-            variant="outlined"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            error={!!errors.password}
-            helperText={errors.password}
-          />
-          <p>
-            Create Account <Link href="/sign-up">Register</Link>
-          </p>
+        <TextField
+          name="password"
+          style={{ width: '100%', margin: '5px' }}
+          type="password"
+          label="Password"
+          variant="outlined"
+          value={password}
+          onChange={handlePasswordChange}
+          error={!!errors.password}
+          helperText={errors.password}
+        />
+        <p>
+          Create Account <Link href="/sign-up">Register</Link>
+        </p>
 
-          <p>
-            Forget Password <Link href="/forgot-password">Forget Password</Link>
-          </p>
+        <p>
+          Forget Password <Link href="/forgot-password">Forget Password</Link>
+        </p>
 
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <Button type="submit" sx={{ width: '100%' }}>
-              Submit
-            </Button>
-          )}
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <Button type="submit" sx={{ width: '100%' }}>
+            Submit
+          </Button>
+        )}
 
-          <div>{serverError}</div>
-        </form>
-      </div>
-    </>
+        <div>{serverError}</div>
+      </form>
+    </div>
   );
 };
 

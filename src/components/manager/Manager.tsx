@@ -53,7 +53,7 @@ const Manager = () => {
       const matchModel = filterModel ? data.bikeModal.toLowerCase().includes(filterModel.toLowerCase()) : true;
       const matchColor = filterColor ? data.bikeColor.toLowerCase().includes(filterColor.toLowerCase()) : true;
       const matchLocation = filterLocation ? data.bikeLocation.toLowerCase().includes(filterLocation.toLowerCase()) : true;
-      const matchRating = filterRating ? data.bikeRating === parseInt(filterRating) : true;
+      const matchRating = filterRating ? data.averageRating === parseInt(filterRating) : true;
       return matchModel && matchColor && matchLocation && matchRating
 
     })
@@ -180,7 +180,7 @@ const Manager = () => {
               },
               {
                 Heading: 'Rating',
-                accessor: 'bikeRating',
+                accessor: 'averageRating',
               },
               {
                 Heading: 'Reservation',

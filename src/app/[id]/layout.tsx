@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
-import { ASSETS, GOOGLE_TAG_MANAGER_ID, IS_PROD } from '../constants';
-import ConfigWrapper from '../commonComponents/configsWrapper';
+import { ASSETS, GOOGLE_TAG_MANAGER_ID, IS_PROD } from '../../constants';
+import ConfigWrapper from '../../commonComponents/configsWrapper';
 import { GoogleTagManager } from '@next/third-parties/google';
 
 const baseURL = 'https://asimbilal.com';
 const pageUrl = `${baseURL}/`;
 const pageImage = ASSETS.logo;
-const title = `login | Your Custom Link to Infinite Horizons |`;
-const description = 'login | Your Custom Link to Infinite Horizons |';
+const title = `Reserved | Your Custom Link to Infinite Horizons |`;
+const description = 'Reserved | Your Custom Link to Infinite Horizons |';
 
 export const metadata: Metadata = {
   title: title,

@@ -20,7 +20,9 @@ const Navbar = () => {
         <div>Heloo Hamza</div>
         <div>
           {type === 'user' ? (
-            <button className="mr-3 py-3 px-3 bg-[blue]">My Reservation</button>
+            <Link href={`/my-reservation`}>
+              <button className="mr-3 py-3 px-3 bg-[blue]" >My Reservation</button>
+            </Link>
           ) : (
             <Link href="/users">
               <button className="mr-3 py-3 px-3 bg-[blue]">User</button>

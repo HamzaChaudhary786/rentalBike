@@ -8,6 +8,8 @@ import { useEnhancedDispatch } from '../../Helpers/reduxHooks';
 import * as Actions from '../../store/actions';
 import { useRouter } from 'next/navigation';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../../constants';
+import { toast } from 'react-toastify';
+
 const SignUpPage = () => {
   const dispatch = useEnhancedDispatch();
   const router = useRouter();
@@ -16,21 +18,23 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = useState('');
+  const [userName, setUserName] = useState('');
 
   const LoginValidation = () => {
     const errors: Partial<FormValues> = {};
-    if (!name) errors.name = 'Name is required';
+    if (!userName) errors.userName = 'Name is required';
     if (!email) {
       errors.email = 'Email is required';
-    } else if (!EMAIL_REGEX.test(email)) {
-      errors.email = 'Invalid email format';
     }
+    // else if (!EMAIL_REGEX.test(email)) {
+    //   errors.email = 'Invalid email format';
+    // }
     if (!password) {
       errors.password = 'Password is required';
-    } else if (!PASSWORD_REGEX.test(password)) {
-      errors.password = 'Invalid password format';
     }
+    // else if (!PASSWORD_REGEX.test(password)) {
+    //   errors.password = 'Invalid password format';
+    // }
     return errors;
   };
 
@@ -45,17 +49,24 @@ const SignUpPage = () => {
       setIsLoading(false);
     } else {
       try {
-        const response = await dispatch(Actions.registerAction(email, password, name));
+        console.log("email:", email, "password:", password, "name:", userName)
+        const response = await dispatch(Actions.registerAction(userName, email, password));
 
-        if (response) {
-          throw response;
-        }
+        if (response) throw response;
+
 
         setIsLoading(false);
+        toast.success("Register Sucessfully")
         router.push('/');
       } catch (error: any) {
-        setServerError(error);
+
         setIsLoading(false);
+        if (typeof error === 'string') {
+          setServerError(error);
+        } else {
+          setServerError('Something went wrong, please try again later');
+        }
+
       }
     }
   };
@@ -75,10 +86,10 @@ const SignUpPage = () => {
             type="text"
             label="Name"
             variant="outlined"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            error={!!errors.name}
-            helperText={errors.name}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            error={!!errors.userName}
+            helperText={errors.userName}
           />
           <TextField
             name="email"

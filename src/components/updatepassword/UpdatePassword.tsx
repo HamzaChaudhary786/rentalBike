@@ -22,8 +22,16 @@ const UpdatePassword = () => {
 
   const LoginValidation = () => {
     const errors: Partial<FormValues> = {};
-    if (!password) errors.password = 'Password is required';
-    if (!rePassword) errors.rePassword = 'Re-Password is required';
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (!PASSWORD_REGEX.test(password)) {
+      errors.password = 'Invalid password format';
+    }
+    if (!rePassword) {
+      errors.rePassword = 'Re-Password is required';
+    } else if (!PASSWORD_REGEX.test(rePassword)) {
+      errors.rePassword = 'Invalid re-password format';
+    }
     return errors;
   };
 
@@ -98,7 +106,7 @@ const UpdatePassword = () => {
               endAdornment: (
                 <InputAdornment position="start">
                   <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                    {!showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               ),

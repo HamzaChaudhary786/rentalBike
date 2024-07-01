@@ -3,6 +3,8 @@ import * as Actions from './';
 import { AppThunkPromise } from '../store';
 import { apiRequest } from '../../Helpers/apiRequestHandler';
 import { AuthSuccessResponse, UserData, GenericData } from '../../interfaces';
+import axios from 'axios';
+import { API_ENDPOINT } from '../../constants';
 
 export const loginAction = (email: string, password: string): AppThunkPromise<string | void> => {
   return async (dispatch) => {
@@ -31,13 +33,15 @@ export const loginAction = (email: string, password: string): AppThunkPromise<st
   };
 };
 
-export const registerAction = (name: string, email: string, password: string): AppThunkPromise<string | void> => {
+export const registerAction = (userName: string, email: string, password: string): AppThunkPromise<string | void> => {
   return async (dispatch) => {
     try {
       const body = {
+        userName: userName,
         email: email,
         password: password,
       };
+
       const response = await apiRequest<GenericData<AuthSuccessResponse>>({
         url: '/auth/register',
         method: 'POST',
@@ -59,10 +63,15 @@ export const forgetPasswordAction = (email: string): AppThunkPromise<string | vo
         email: email,
       };
       const response = await apiRequest<GenericData<AuthSuccessResponse>>({
-        url: '/auth/register',
+        url: '/auth/generate-otp',
         method: 'POST',
         data: body,
       });
+      dispatch(
+        ReducerActions.setEmail({
+          email: email,
+        }),
+      );
     } catch (error) {
       if (error instanceof Error) {
         console.log('error', error);

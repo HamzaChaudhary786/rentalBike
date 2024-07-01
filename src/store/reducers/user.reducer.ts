@@ -6,6 +6,8 @@ const initialState: UserStore = {
   userData: null,
   accessToken: null,
   refreshToken: null,
+  email: null,
+  otpCode: null
 };
 
 export const UserSlice = createSlice({
@@ -32,12 +34,18 @@ export const UserSlice = createSlice({
       localStorage.removeItem('@access-token');
       localStorage.removeItem('@refresh-token');
     },
+    setEmail(state, action) {
+      state.email = action.payload.email;
+      console.log("state email", state.email)
+    },
   },
+
 });
 
 export const {
   setUserData,
   setTokens,
+  setEmail,
   setLogOut,
 } = UserSlice.actions;
 

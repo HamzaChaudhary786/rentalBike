@@ -31,7 +31,7 @@ interface TableProps {
   rowsToShow?: number;
 }
 
-export const TableComp: React.FC<TableProps> = ({ columns, data, isLoading, rowsToShow = 7 }) => {
+export const TableComp: React.FC<TableProps> = ({ columns, data, isLoading, rowsToShow = 8 }) => {
   const [Page, setPage] = useState(0);
 
   const [PopOverBaseElement, setPopOverBaseElement] = React.useState<HTMLElement | null>(null);

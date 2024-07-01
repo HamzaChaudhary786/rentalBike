@@ -8,20 +8,28 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 const EmailVerification = () => {
+
+
   const dispatch = useEnhancedDispatch();
+
   const email = useEnhancedSelector((state) => state.user.email);
+
+
+  useEffect(() => {
+    console.log("email is", email)
+  }, [email])
 
   const router = useRouter();
   const [errors, setErrors] = useState<FormValues>({});
   const [serverError, setServerError] = useState('');
-  const [otpCode, setOtpCode] = useState('');
+  const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const [seconds, setSeconds] = useState(59);
 
   const LoginValidation = () => {
     const errors: Partial<FormValues> = {};
-    if (!otpCode) errors.otpCode = 'Otp is required';
+    if (!otp) errors.otp = 'Otp is required';
     return errors;
   };
 
@@ -36,13 +44,13 @@ const EmailVerification = () => {
       setIsLoading(false);
     } else {
       try {
-        const response = await dispatch(Actions.VerifyOtpAction(email, otpCode));
+        const response = await dispatch(Actions.VerifyOtpAction(email, otp));
         if (response) {
           throw response;
         }
-
+        router.push('/update-password');
         setIsLoading(false);
-        router.push('/');
+
       } catch (error: any) {
         setServerError(error);
         setIsLoading(false);
@@ -59,15 +67,16 @@ const EmailVerification = () => {
   }, [seconds]);
 
   // useEffect(() => {
-  //     if (!email) {
-  //         router.push('/forgot-password');
-  //     }
+  //   if (!email) {
+  //     router.push('/forgot-password');
+  //   }
   // }, [email]);
 
   const SendOtpCode = async () => {
     setErrors({});
     try {
       const errorFromAction = await dispatch(Actions.forgetPasswordAction(email));
+      console.log("verification email", errorFromAction)
       if (errorFromAction) throw errorFromAction;
     } catch (error: any) {
       setErrors(error as object);
@@ -89,10 +98,10 @@ const EmailVerification = () => {
             type="number"
             label="Otp"
             variant="outlined"
-            value={otpCode}
-            onChange={(e) => setOtpCode(e.target.value)}
-            error={!!errors.otpCode}
-            helperText={errors.otpCode}
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            error={!!errors.otp}
+            helperText={errors.otp}
           />
 
           {isLoading ? (

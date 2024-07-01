@@ -13,9 +13,9 @@ export const UserData = [
         endDate: '2024-06-29T22:04:00',
       },
       {
-        model: 'Dpk12',
-        location: 'Lahore',
-        color: 'Black',
+        model: 'DHk',
+        location: 'Sahiwal',
+        color: 'Red',
         startDate: '2024-06-24T06:59:42',
         endDate: '2024-06-26T07:36:15',
       },
@@ -41,7 +41,15 @@ export const UserData = [
     name: 'Michael Johnson',
     email: 'michael@example.com',
     type: 'user',
-    reservation: [],
+    reservation: [
+      {
+        model: 'ABC456',
+        location: 'London',
+        color: 'Blue',
+        startDate: '2024-06-28T12:00:00',
+        endDate: '2024-06-30T18:00:00',
+      },
+    ],
   },
   {
     id: 4,

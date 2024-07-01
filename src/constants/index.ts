@@ -46,6 +46,20 @@ export const URL_REGEX = /^(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{
 const manual_deploy = 'v_1';
 
 export const ASSETS = {
-  logo:"/images/logo.svg",
+  logo: "/images/logo.svg",
   fav: "/fav/fav.svg"
 };
+
+
+
+export const AvailibleValue = [
+  { value: "Availible", label: "Availible" },
+  { value: "Not Availible", label: "Not Availible" }
+
+];
+
+export const UserTypes = [
+  { value: "manager", label: "Manager" },
+  { value: "user", label: "User" },
+
+];

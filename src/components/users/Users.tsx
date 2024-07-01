@@ -8,6 +8,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { CheckBox, Delete, Password, VisibilityOff } from '@mui/icons-material';
 import { Bike } from '../../interfaces';
 import { UserData } from '../../Helpers/UserDummyData';
+import OptionValue from '../../Helpers/OptionValue';
+import { UserTypes } from '../../constants';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -254,23 +256,22 @@ const Users = () => {
                       variant="outlined"
                     />
                     <br />
-                    <TextField
+                    {/* <TextField
                       type="text"
                       id="Type"
                       label="Type"
                       value={types}
                       onChange={(e) => setTypes(e.target.value)}
                       variant="outlined"
-                    />
-                    <br />
-                    <TextField
-                      type="password"
-                      id="Type"
-                      label="Password"
-                      value={Password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      variant="outlined"
-                    />
+                    /> */}
+
+                    <OptionValue
+                      label="Type*"
+                      value={types}
+                      onChange={setTypes}
+                      menuItems={UserTypes}>
+
+                    </OptionValue>
                     <br />
                   </div>
 
@@ -311,15 +312,28 @@ const Users = () => {
                     <p>Type: {itm.type}</p>
                     <h3>Reservations:</h3>
                     <ul>
-                      {itm.reservation.map((res: any, index: any) => (
-                        <li key={index} className='space-y-4'>
-                          <p>Model: {res.model}</p>
-                          <p>Location: {res.location}</p>
-                          <p>Color: {res.color}</p>
-                          <p>Start Date: {new Date(res.startDate).toLocaleString()}</p>
-                          <p>End Date: {new Date(res.endDate).toLocaleString()}</p>
-                        </li>
-                      ))}
+                      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+                        <thead>
+                          <tr>
+                            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Model</th>
+                            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Location</th>
+                            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Color</th>
+                            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Start Date</th>
+                            <th style={{ border: '1px solid #ddd', padding: '8px' }}>End Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {itm.reservation.map((item: any, index: any) => (
+                            <tr key={index}>
+                              <td style={{ border: '1px solid #ddd', padding: '8px' }}>{item.model}</td>
+                              <td style={{ border: '1px solid #ddd', padding: '8px' }}>{item.location}</td>
+                              <td style={{ border: '1px solid #ddd', padding: '8px' }}>{item.color}</td>
+                              <td style={{ border: '1px solid #ddd', padding: '8px' }}>{new Date(item.startDate).toLocaleString()}</td>
+                              <td style={{ border: '1px solid #ddd', padding: '8px' }}>{new Date(item.endDate).toLocaleString()}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </ul>
                   </div>
                 ))

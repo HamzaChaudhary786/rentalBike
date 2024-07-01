@@ -27,7 +27,7 @@ export interface FormValues {
   rePassword?: string;
   error?: string;
   userName?: string;
-  otpCode?: string;
+  otp?: string;
 }
 
 export interface UserData {

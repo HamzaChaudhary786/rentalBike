@@ -41,7 +41,15 @@ export const UserData = [
     name: 'Michael Johnson',
     email: 'michael@example.com',
     type: 'user',
-    reservation: [],
+    reservation: [
+      {
+        model: 'ABC456',
+        location: 'London',
+        color: 'Blue',
+        startDate: '2024-06-28T12:00:00',
+        endDate: '2024-06-30T18:00:00',
+      },
+    ],
   },
   {
     id: 4,

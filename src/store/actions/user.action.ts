@@ -67,6 +67,11 @@ export const forgetPasswordAction = (email: string): AppThunkPromise<string | vo
         method: 'POST',
         data: body,
       });
+      dispatch(
+        ReducerActions.setEmail({
+          email: email,
+        }),
+      );
     } catch (error) {
       if (error instanceof Error) {
         console.log('error', error);

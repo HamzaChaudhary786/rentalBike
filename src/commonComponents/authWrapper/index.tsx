@@ -43,7 +43,8 @@ const AuthWrapper: React.FC<{ children: React.ReactNode; hideNav?: boolean; allo
     if (!isLoading) {
       if (isAuth && userRole) {
 
-        if (userRole === "manager" && location === '/users') {
+        if (userRole === "manager" && location === '/reservation') {
+          console.log("heheheh")
           router.push('/manager');
         } else if (userRole === "user" && location === '/manager') {
           router.push('/reservation');

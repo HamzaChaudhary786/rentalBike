@@ -10,6 +10,8 @@ import { Bike } from '../../interfaces';
 import UserData from '../reservation/UserData';
 import Link from 'next/link';
 import { reservationUserTable } from '../../Helpers/ReservationUserDummyData';
+import OptionValue from '../../Helpers/OptionValue';
+import { AvailibleValue } from '../../constants';
 
 const Manager = () => {
   const [model, setModel] = useState('');
@@ -24,6 +26,7 @@ const Manager = () => {
   const [filterColor, setFilterColor] = useState('');
   const [filterLocation, setFilterLocation] = useState('');
   const [filterRating, setFilterRating] = useState("")
+  const [Availible, setAvailible] = useState("Availible");
   const handleEdit = (id: any) => {
     setId(id);
   };
@@ -207,9 +210,13 @@ const Manager = () => {
                   //     return <CircularProgress />;
                   return (
                     <>
-                      <IconButton className="mt-4 mr-5">
-                        <CheckBox />
-                      </IconButton>
+                      <OptionValue
+                        value={Availible}
+                        onChange={setAvailible}
+                        menuItems={AvailibleValue}
+                      >
+
+                      </OptionValue>
                     </>
                   );
                 },

@@ -41,9 +41,9 @@ const ForgetPassword = () => {
         if (response) {
           throw response;
         }
-
-        setIsLoading(false);
         router.push('/verification');
+        setIsLoading(false);
+        
       } catch (error: any) {
         setServerError(error);
         setIsLoading(false);
